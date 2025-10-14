@@ -33,6 +33,13 @@ A bidirectional converter that transforms numbers between Roman numeral and Arab
 - **Progression**: User clicks swap → Values exchange between fields → Conversion recalculates
 - **Success criteria**: Values swap smoothly with clear animation feedback
 
+### Dark Mode Toggle
+- **Functionality**: Toggle button to switch between light and dark color schemes
+- **Purpose**: Reduces eye strain in low-light environments and provides user preference control
+- **Trigger**: User clicks theme toggle button in top-right corner
+- **Progression**: User clicks toggle → Theme switches instantly → Preference saved to localStorage → Theme persists across sessions
+- **Success criteria**: Smooth transition between themes; respects system preference on first visit; preference persists across page reloads
+
 ## Edge Case Handling
 
 - **Empty Input**: Show placeholder examples, clear opposite field gracefully
@@ -47,17 +54,22 @@ The design should feel precise, mathematical, and trustworthy—like a professio
 
 ## Color Selection
 
-Monochromatic with selective accent - A refined grayscale palette with a single vibrant accent color to highlight the conversion action, creating focus and clarity.
+Monochromatic with selective accent - A refined grayscale palette with a single vibrant accent color to highlight the conversion action, creating focus and clarity. Dark mode provides an inverted palette optimized for low-light viewing.
 
-- **Primary Color**: Deep charcoal (oklch(0.25 0 0)) - Conveys precision and professionalism
-- **Secondary Colors**: Soft grays (oklch(0.95 0 0)) for backgrounds - Provides clean canvas without distraction
-- **Accent Color**: Vibrant blue (oklch(0.55 0.22 250)) - Draws attention to interactive elements and conversion status
-- **Foreground/Background Pairings**:
+- **Primary Color**: Deep charcoal (oklch(0.25 0 0)) in light mode, light gray (oklch(0.90 0 0)) in dark mode - Conveys precision and professionalism
+- **Secondary Colors**: Soft grays (oklch(0.95 0 0)) in light mode, dark grays (oklch(0.25 0 0)) in dark mode for backgrounds - Provides clean canvas without distraction
+- **Accent Color**: Vibrant blue (oklch(0.55 0.22 250) in light, oklch(0.60 0.22 250) in dark) - Draws attention to interactive elements and conversion status
+- **Foreground/Background Pairings (Light Mode)**:
   - Background (Light Gray oklch(0.98 0 0)): Dark text (oklch(0.25 0 0)) - Ratio 13.4:1 ✓
   - Card (White oklch(1 0 0)): Dark text (oklch(0.25 0 0)) - Ratio 15.2:1 ✓
   - Primary (Deep Charcoal oklch(0.25 0 0)): White text (oklch(1 0 0)) - Ratio 15.2:1 ✓
   - Accent (Vibrant Blue oklch(0.55 0.22 250)): White text (oklch(1 0 0)) - Ratio 4.8:1 ✓
   - Muted (Light Gray oklch(0.95 0 0)): Medium Gray text (oklch(0.50 0 0)) - Ratio 6.2:1 ✓
+- **Foreground/Background Pairings (Dark Mode)**:
+  - Background (Dark Gray oklch(0.15 0 0)): Light text (oklch(0.95 0 0)) - Ratio 12.8:1 ✓
+  - Card (Darker Gray oklch(0.20 0 0)): Light text (oklch(0.95 0 0)) - Ratio 11.5:1 ✓
+  - Primary (Light Gray oklch(0.90 0 0)): Dark text (oklch(0.20 0 0)) - Ratio 11.5:1 ✓
+  - Accent (Vibrant Blue oklch(0.60 0.22 250)): White text (oklch(1 0 0)) - Ratio 5.2:1 ✓
 
 ## Font Selection
 
@@ -83,24 +95,28 @@ Subtle, purposeful micro-interactions that provide feedback without slowing down
   - Card: Houses the entire converter in a clean, elevated container
   - Input: Large, clear text fields for both numeral types with prominent focus states
   - Label: Clear field labels above inputs
-  - Button: Icon button for swap functionality with hover states
+  - Button: Icon button for swap functionality with hover states, and ghost button for theme toggle
   - Alert: Subtle inline error/info messages below inputs
   
 - **Customizations**:
   - Inputs sized larger than default (text-2xl) for prominence
   - Custom monospace font applied to input fields
   - Swap button circular with icon only (no text) positioned centrally between fields
+  - Theme toggle button positioned in top-right corner with ghost variant
   - Generous padding throughout for breathing room
   
 - **States**:
   - Inputs: default (subtle border), focused (accent border + subtle glow), error (red border + shake), success (green subtle highlight)
   - Swap button: default, hover (scale 1.05), active (rotate 180deg)
+  - Theme toggle: default, hover (subtle background), transitions smoothly between sun/moon icons
   - Error text: fade in/out transitions
   
 - **Icon Selection**:
   - ArrowsDownUp from phosphor-icons for the swap button (represents bidirectional conversion)
   - WarningCircle for error states
   - Info for helpful tips
+  - Moon (filled) for dark mode activation
+  - Sun (filled) for light mode activation
   
 - **Spacing**:
   - Card padding: p-8 (2rem)

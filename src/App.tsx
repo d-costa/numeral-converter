@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { WarningCircle } from '@phosphor-icons/react';
 import { arabicToRoman, romanToArabic, isValidArabicInput, isValidRomanInput } from '@/lib/converter';
 import { motion } from 'framer-motion';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 function App() {
   const [arabicInput, setArabicInput] = useState('');
@@ -94,6 +95,10 @@ function App() {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
+      <div className="fixed top-4 right-4 z-50">
+        <ThemeToggle />
+      </div>
+      
       <div className="w-full max-w-2xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -117,7 +122,7 @@ function App() {
                   id="arabic-input"
                   type="text"
                   inputMode="numeric"
-                  placeholder="Enter number (e.g., 2024)"
+                  placeholder="2024"
                   value={arabicInput}
                   onChange={(e) => handleArabicChange(e.target.value)}
                   className={`text-2xl h-14 font-mono tracking-wide ${
@@ -143,7 +148,7 @@ function App() {
                 <Input
                   id="roman-input"
                   type="text"
-                  placeholder="Enter Roman numeral (e.g., MMXXIV)"
+                  placeholder="MMXXIV"
                   value={romanInput}
                   onChange={(e) => handleRomanChange(e.target.value)}
                   className={`text-2xl h-14 font-mono tracking-wide uppercase ${
