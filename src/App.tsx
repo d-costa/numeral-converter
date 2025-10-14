@@ -198,13 +198,8 @@ function App() {
             </div>
 
             <div className="mt-8 pt-6 border-t border-border">
-              <div className="text-sm text-muted-foreground space-y-1">
-                <p className="font-medium text-foreground mb-2">Quick Reference:</p>
-                <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-                  <span>I = 1, V = 5, X = 10</span>
-                  <span>L = 50, C = 100</span>
-                  <span>D = 500, M = 1000</span>
-                </div>
+              <div className="text-sm text-muted-foreground">
+                <span className="font-medium text-foreground">Quick Reference:</span> I = 1, V = 5, X = 10, L = 50, C = 100, D = 500, M = 1000
               </div>
             </div>
           </Card>
