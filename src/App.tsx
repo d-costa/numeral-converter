@@ -97,16 +97,11 @@ function App() {
     const tempArabic = arabicInput;
     const tempRoman = romanInput;
     
-    setArabicInput(tempRoman);
-    setRomanInput(tempArabic);
+    setArabicInput('');
+    setRomanInput('');
     setArabicError('');
     setRomanError('');
-    
-    if (tempRoman) {
-      handleArabicChange(tempRoman);
-    } else if (tempArabic) {
-      handleRomanChange(tempArabic);
-    }
+    setLastEdited(null);
   };
 
   return (
