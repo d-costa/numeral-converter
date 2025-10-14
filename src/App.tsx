@@ -13,6 +13,7 @@ function App() {
   const [arabicError, setArabicError] = useState('');
   const [romanError, setRomanError] = useState('');
   const [lastEdited, setLastEdited] = useState<'arabic' | 'roman' | null>(null);
+  const [isSwapped, setIsSwapped] = useState(false);
 
   const handleArabicChange = (value: string) => {
     setArabicInput(value);
@@ -94,6 +95,7 @@ function App() {
   };
 
   const handleSwap = () => {
+    setIsSwapped(!isSwapped);
     const tempArabic = arabicInput;
     const tempRoman = romanInput;
     
@@ -102,13 +104,6 @@ function App() {
     setArabicError('');
     setRomanError('');
     setLastEdited(null);
-    
-    if (tempRoman) {
-      handleArabicChange(tempRoman);
-    }
-    if (tempArabic) {
-      handleRomanChange(tempArabic);
-    }
   };
 
   return (
@@ -128,75 +123,151 @@ function App() {
 
           <Card className="p-6 md:p-8 shadow-lg">
             <div className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="arabic-input" className="text-sm font-medium">
-                  Arabic Numeral (1-3999)
-                </Label>
-                <Input
-                  id="arabic-input"
-                  type="text"
-                  inputMode="numeric"
-                  placeholder="Enter number (e.g., 2024)"
-                  value={arabicInput}
-                  onChange={(e) => handleArabicChange(e.target.value)}
-                  className={`text-2xl h-14 font-mono tracking-wide ${
-                    arabicError ? 'border-destructive focus-visible:ring-destructive' : 'focus-visible:ring-accent'
-                  }`}
-                />
-                {arabicError && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center gap-2 text-destructive text-sm mt-2"
-                  >
-                    <WarningCircle weight="fill" className="flex-shrink-0" />
-                    <span>{arabicError}</span>
-                  </motion.div>
-                )}
-              </div>
+              {!isSwapped ? (
+                <>
+                  <div className="space-y-2">
+                    <Label htmlFor="arabic-input" className="text-sm font-medium">
+                      Arabic Numeral (1-3999)
+                    </Label>
+                    <Input
+                      id="arabic-input"
+                      type="text"
+                      inputMode="numeric"
+                      placeholder="Enter number (e.g., 2024)"
+                      value={arabicInput}
+                      onChange={(e) => handleArabicChange(e.target.value)}
+                      className={`text-2xl h-14 font-mono tracking-wide ${
+                        arabicError ? 'border-destructive focus-visible:ring-destructive' : 'focus-visible:ring-accent'
+                      }`}
+                    />
+                    {arabicError && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex items-center gap-2 text-destructive text-sm mt-2"
+                      >
+                        <WarningCircle weight="fill" className="flex-shrink-0" />
+                        <span>{arabicError}</span>
+                      </motion.div>
+                    )}
+                  </div>
 
-              <div className="flex justify-center">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={handleSwap}
-                  className="h-10 w-10 rounded-full border-2 hover:bg-accent hover:text-accent-foreground hover:border-accent transition-all"
-                  disabled={!arabicInput && !romanInput}
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9, rotate: 180 }}
-                  >
-                    <ArrowsDownUp size={20} weight="bold" />
-                  </motion.div>
-                </Button>
-              </div>
+                  <div className="flex justify-center">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={handleSwap}
+                      className="h-10 w-10 rounded-full border-2 hover:bg-accent hover:text-accent-foreground hover:border-accent transition-all"
+                      disabled={!arabicInput && !romanInput}
+                    >
+                      <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9, rotate: 180 }}
+                      >
+                        <ArrowsDownUp size={20} weight="bold" />
+                      </motion.div>
+                    </Button>
+                  </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="roman-input" className="text-sm font-medium">
-                  Roman Numeral
-                </Label>
-                <Input
-                  id="roman-input"
-                  type="text"
-                  placeholder="Enter Roman numeral (e.g., MMXXIV)"
-                  value={romanInput}
-                  onChange={(e) => handleRomanChange(e.target.value)}
-                  className={`text-2xl h-14 font-mono tracking-wide uppercase ${
-                    romanError ? 'border-destructive focus-visible:ring-destructive' : 'focus-visible:ring-accent'
-                  }`}
-                />
-                {romanError && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center gap-2 text-destructive text-sm mt-2"
-                  >
-                    <WarningCircle weight="fill" className="flex-shrink-0" />
-                    <span>{romanError}</span>
-                  </motion.div>
-                )}
-              </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="roman-input" className="text-sm font-medium">
+                      Roman Numeral
+                    </Label>
+                    <Input
+                      id="roman-input"
+                      type="text"
+                      placeholder="Enter Roman numeral (e.g., MMXXIV)"
+                      value={romanInput}
+                      onChange={(e) => handleRomanChange(e.target.value)}
+                      className={`text-2xl h-14 font-mono tracking-wide uppercase ${
+                        romanError ? 'border-destructive focus-visible:ring-destructive' : 'focus-visible:ring-accent'
+                      }`}
+                    />
+                    {romanError && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex items-center gap-2 text-destructive text-sm mt-2"
+                      >
+                        <WarningCircle weight="fill" className="flex-shrink-0" />
+                        <span>{romanError}</span>
+                      </motion.div>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="space-y-2">
+                    <Label htmlFor="roman-input" className="text-sm font-medium">
+                      Roman Numeral
+                    </Label>
+                    <Input
+                      id="roman-input"
+                      type="text"
+                      placeholder="Enter Roman numeral (e.g., MMXXIV)"
+                      value={romanInput}
+                      onChange={(e) => handleRomanChange(e.target.value)}
+                      className={`text-2xl h-14 font-mono tracking-wide uppercase ${
+                        romanError ? 'border-destructive focus-visible:ring-destructive' : 'focus-visible:ring-accent'
+                      }`}
+                    />
+                    {romanError && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex items-center gap-2 text-destructive text-sm mt-2"
+                      >
+                        <WarningCircle weight="fill" className="flex-shrink-0" />
+                        <span>{romanError}</span>
+                      </motion.div>
+                    )}
+                  </div>
+
+                  <div className="flex justify-center">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={handleSwap}
+                      className="h-10 w-10 rounded-full border-2 hover:bg-accent hover:text-accent-foreground hover:border-accent transition-all"
+                      disabled={!arabicInput && !romanInput}
+                    >
+                      <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9, rotate: 180 }}
+                      >
+                        <ArrowsDownUp size={20} weight="bold" />
+                      </motion.div>
+                    </Button>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="arabic-input" className="text-sm font-medium">
+                      Arabic Numeral (1-3999)
+                    </Label>
+                    <Input
+                      id="arabic-input"
+                      type="text"
+                      inputMode="numeric"
+                      placeholder="Enter number (e.g., 2024)"
+                      value={arabicInput}
+                      onChange={(e) => handleArabicChange(e.target.value)}
+                      className={`text-2xl h-14 font-mono tracking-wide ${
+                        arabicError ? 'border-destructive focus-visible:ring-destructive' : 'focus-visible:ring-accent'
+                      }`}
+                    />
+                    {arabicError && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex items-center gap-2 text-destructive text-sm mt-2"
+                      >
+                        <WarningCircle weight="fill" className="flex-shrink-0" />
+                        <span>{arabicError}</span>
+                      </motion.div>
+                    )}
+                  </div>
+                </>
+              )}
             </div>
 
             <div className="mt-8 pt-6 border-t border-border">
